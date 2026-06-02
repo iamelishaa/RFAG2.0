@@ -14,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   const [currentImage, setCurrentImage] = useState(0);
   const images = [
-    "/path/to/your/image1.jpg",
+    "/images/pastor.png",
     "/path/to/your/image2.jpg",
     "/path/to/your/image3.jpg"
   ];
