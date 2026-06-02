@@ -12,9 +12,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 const images = [
-  { src: "/images/hero-worship.svg", alt: "Sunrise-inspired worship background" },
-  { src: "/images/hero-community.svg", alt: "Abstract landscape representing community" },
-  { src: "/images/hero-service.svg", alt: "Warm abstract background representing service" },
+  { src: "public/images/pastor.png", alt: "Sunrise-inspired worship background" },
+  { src: "/images/What do you need to praise God for today_.jpg", alt: "Abstract landscape representing community" },
+  { src: "public/images/-11.jpg", alt: "Warm abstract background representing service" },
 ];
 
 export default function Home() {
@@ -68,8 +68,8 @@ export default function Home() {
             {/* Main Content */}
             <div className="max-w-4xl mx-auto text-center pt-8">
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                MAKING JESUS KNOWN TO
-                <span className="block text-[#EEF0FF]">EVERYONE, EVERYWHERE</span>
+                A MISSION WITH A 
+                <span className="block text-[#EEF0FF]">BIG VISION</span>
               </h1>
               <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
                 Everyone is welcome. Everyone has a next best step. Everyone can make a difference.
