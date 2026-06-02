@@ -1,8 +1,6 @@
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
 import { ArrowRight, Calendar, Play, Users } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { useState, useEffect } from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,93 +9,122 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const images = [
-  { src: "public/images/pastor.png", alt: "Sunrise-inspired worship background" },
-  { src: "/images/What do you need to praise God for today_.jpg", alt: "Abstract landscape representing community" },
-  { src: "public/images/-11.jpg", alt: "Warm abstract background representing service" },
-];
-
 export default function Home() {
-  const [currentImage, setCurrentImage] = useState(0);
-  const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
 
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative text-white py-20 md:py-32 overflow-hidden min-h-[600px]">
-        {/* Background Image Slider */}
+      <section className="relative text-white overflow-hidden min-h-screen">
+        {/* Video Background */}
         <div className="absolute inset-0 z-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentImage}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: prefersReducedMotion ? 0 : 1 }}
-              className="absolute inset-0"
-            >
-              <img
-                src={images[currentImage].src}
-                alt={images[currentImage].alt}
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-          </AnimatePresence>
-          <div className="absolute inset-0 bg-black/40" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="public/images/Hero-Section-Video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="relative">
-            {/* Ministries Button - Top Right */}
-            <Link
-              to="/ministries"
-              className="absolute top-0 right-0 bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full font-semibold hover:bg-white/30 transition-colors"
-            >
-              Ministries
-            </Link>
-
-            {/* Main Content */}
-            <div className="max-w-4xl mx-auto text-center pt-8">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                A MISSION WITH A 
-                <span className="block text-[#EEF0FF]">BIG VISION</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full">
+          <div className="relative min-h-screen flex items-end pb-22">
+            {/* Main Content - Bottom Left */}
+            <div className="max-w-2xl">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 leading-tight">
+                Welcome to Rhema Faith AG Church
+                <span className="block text-lg">A mission with a big vision</span>
               </h1>
-              <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
-                Everyone is welcome. Everyone has a next best step. Everyone can make a difference.
+              <p className="text-base md:text-lg mb-4 text-white/90 leading-relaxed">
+                See what God can do through you.
               </p>
-              <Link
-                to="/services"
-                className="inline-block bg-white text-[#4F55A1] px-10 py-4 rounded-full font-bold text-lg hover:bg-[#EEF0FF] transition-colors shadow-lg hover:shadow-xl"
-              >
-                VISIT
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  to="/contact"
+                  className="bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors text-center"
+                >
+                  Get connected
+                </Link>
+                <Link
+                  to="/about"
+                  className="bg-gray-800 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-700 transition-colors text-center"
+                >
+                  Learn more
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section className="py-20 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+              Join us in worship
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              Whether you're joining us in person or online, there's a place for you in our community.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition-shadow">
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Sunday Services</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Experience powerful worship and inspiring messages every Sunday morning.
+              </p>
+              <Link to="/services" className="text-[#4F55A1] dark:text-[#7B82FF] font-semibold hover:underline inline-flex items-center">
+                Service times
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
 
-            {/* Pagination Dots */}
-            <div className="flex justify-center gap-3 mt-16">
-              {images.map((image, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentImage(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    currentImage === index
-                      ? "bg-white w-8"
-                      : "bg-white/50 hover:bg-white/70"
-                  }`}
-                  aria-label={`Show slide ${index + 1}: ${image.alt}`}
-                  aria-pressed={currentImage === index}
-                />
-              ))}
+            <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition-shadow">
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Online Church</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Stream our services live from anywhere in the world.
+              </p>
+              <Link to="/live" className="text-[#4F55A1] dark:text-[#7B82FF] font-semibold hover:underline inline-flex items-center">
+                Watch online
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </div>
+
+            <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition-shadow">
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Small Groups</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Connect with others in small groups for fellowship and growth.
+              </p>
+              <Link to="/ministries" className="text-[#4F55A1] dark:text-[#7B82FF] font-semibold hover:underline inline-flex items-center">
+                Find a group
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+
+            <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition-shadow">
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Ministries</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Get involved in ministries that match your gifts and passions.
+              </p>
+              <Link to="/ministries" className="text-[#4F55A1] dark:text-[#7B82FF] font-semibold hover:underline inline-flex items-center">
+                Explore ministries
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link
+              to="/about"
+              className="bg-[#4F55A1] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#3D427B] transition-colors inline-flex items-center"
+            >
+              Learn more about us
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </div>
         </div>
       </section>
@@ -106,31 +133,46 @@ export default function Home() {
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg text-center">
-              <div className="bg-[#EEF0FF] dark:bg-[#3D427B] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="h-8 w-8 text-[#4F55A1] dark:text-[#7B82FF]" />
+            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-2xl text-center">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                <img src="/images/120.png" alt="Sunday Services" className="w-full h-full object-cover" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Sunday Services</h3>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Sunday Services</h3>
+                <Link to="/services" className="text-[#4F55A1] dark:text-[#7B82FF] hover:underline">
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
               <p className="text-gray-600 dark:text-gray-400">
                 Join us every Sunday at 10:00 AM for worship, fellowship, and inspiring messages.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg text-center">
-              <div className="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-green-600 dark:text-green-400" />
+            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-2xl text-center">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                <img src="/images/120.png" alt="Community Groups" className="w-full h-full object-cover" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Community Groups</h3>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Community Groups</h3>
+                <Link to="/ministries" className="text-green-600 dark:text-green-400 hover:underline">
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
               <p className="text-gray-600 dark:text-gray-400">
                 Connect with others through small groups, Bible studies, and ministry teams.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg text-center">
-              <div className="bg-purple-100 dark:bg-purple-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Play className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-2xl text-center">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                <img src="/images/120.png" alt="Sermon Archive" className="w-full h-full object-cover" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Sermon Archive</h3>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Sermon Archive</h3>
+                <Link to="/sermons" className="text-purple-600 dark:text-purple-400 hover:underline">
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
               <p className="text-gray-600 dark:text-gray-400">
                 Watch or listen to past sermons anytime, anywhere. Never miss a message.
               </p>
@@ -142,11 +184,16 @@ export default function Home() {
       {/* Upcoming Events Preview */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-            Upcoming Events
-          </h2>
+          <div className="flex items-center justify-center gap-2 mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Upcoming Events
+            </h2>
+            <Link to="/events" className="text-[#4F55A1] dark:text-[#7B82FF] hover:underline">
+              <ArrowRight className="h-6 w-6" />
+            </Link>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-2xl hover:shadow-3xl transition-shadow">
               <div className="flex items-start justify-between">
                 <div>
                   <span className="text-sm text-[#4F55A1] dark:text-[#7B82FF] font-semibold">Sunday</span>
@@ -157,7 +204,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-2xl hover:shadow-3xl transition-shadow">
               <div className="flex items-start justify-between">
                 <div>
                   <span className="text-sm text-green-600 dark:text-green-400 font-semibold">Wednesday</span>

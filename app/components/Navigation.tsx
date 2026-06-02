@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router";
-import { Church, Menu, X, Moon, Sun, Search, X as CloseIcon } from "lucide-react";
+import { Menu, X, Moon, Sun, Search, X as CloseIcon } from "lucide-react";
 import { useState } from "react";
 import { useDarkMode } from "../contexts/DarkModeContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -40,11 +40,8 @@ export default function Navigation() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.2 }}
               >
-                <Link to="/" className="flex items-center space-x-2">
-                  <Church className="h-8 w-8 text-[#4F55A1]" />
-                  <span className="text-xl font-bold text-gray-900 dark:text-white">
-                    Rhema Faith AG Church
-                  </span>
+                <Link to="/" className="flex items-center">
+                  <img src="/images/120.png" alt="Rhema Faith AG Church" className="h-10 w-auto" />
                 </Link>
               </motion.div>
             )}
