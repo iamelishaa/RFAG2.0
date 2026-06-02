@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { Church, Menu, X, Moon, Sun, Search, X as CloseIcon } from "lucide-react";
 import { useState } from "react";
 import { useDarkMode } from "../contexts/DarkModeContext";
@@ -9,7 +9,15 @@ export default function Navigation() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
   const { isDark, toggleDarkMode } = useDarkMode();
+
+  const submitSearch = () => {
+    const query = searchQuery.trim();
+    if (!query) return;
+    setIsSearchOpen(false);
+    navigate(`/sermons?q=${encodeURIComponent(query)}`);
+  };
 
   const navItems = [
     { path: "/", label: "Home" },
@@ -100,7 +108,11 @@ export default function Navigation() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search sermons, events, ministries..."
+                    placeholder="Search sermons..."
+                    aria-label="Search sermons"
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") submitSearch();
+                    }}
                     className="w-full pl-12 pr-16 py-4 text-lg rounded-xl border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4F55A1] focus:border-transparent shadow-lg"
                     autoFocus
                   />
@@ -168,6 +180,14 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/sermons"
+              className="flex items-center space-x-2 py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 font-medium w-full"
+              onClick={() => setIsOpen(false)}
+            >
+              <Search className="h-5 w-5" />
+              <span>Search Sermons</span>
+            </Link>
             <button
               onClick={toggleDarkMode}
               className="flex items-center space-x-2 py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 font-medium w-full"

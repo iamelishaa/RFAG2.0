@@ -1,5 +1,6 @@
 import type { Route } from "./+types/ministries";
 import { Heart, Users, BookOpen, Music, HelpingHand, Baby, GraduationCap, Coffee } from "lucide-react";
+import { Link } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -156,9 +157,12 @@ export default function Ministries() {
             <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
               Whether you're gifted in music, teaching, hospitality, or just have a heart to help, there's a place for you on our team.
             </p>
-            <button className="bg-[#4F55A1] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3D427B] transition-colors">
+            <Link
+              to="/contact?subject=Volunteer%20Opportunity"
+              className="inline-block bg-[#4F55A1] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3D427B] transition-colors"
+            >
               Become a Volunteer
-            </button>
+            </Link>
           </div>
         </section>
       </div>

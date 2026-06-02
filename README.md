@@ -1,87 +1,58 @@
-# Welcome to React Router!
+# Rhema Faith AG Church Website
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A server-rendered React Router website for Rhema Faith AG Church. The site includes information about services and ministries, an event listing, a sermon archive, responsive navigation, dark mode, and email-based contact flows.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## Requirements
 
-## Features
+- Node.js 20 or later
+- npm
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
-## Getting Started
-
-### Installation
-
-Install the dependencies:
+## Local Development
 
 ```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
+npm ci
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+The development server is available at `http://localhost:5173`.
 
-## Building for Production
-
-Create a production build:
+## Available Commands
 
 ```bash
+npm run dev        # Start the development server with HMR
+npm run typecheck  # Generate React Router types and run TypeScript checks
+npm run build      # Build the client and SSR server bundles
+npm run start      # Start the production server from build/server/index.js
+```
+
+## Site Configuration
+
+Shared church details live in `app/config/site.ts`. Replace the starter address, phone number, and email address with verified church information before launch. Pages and components should consume this shared configuration rather than duplicating contact details.
+
+The contact, event-registration, volunteer, prayer-request, and event-update flows deliberately open the visitor's email app. This provides an honest working fallback until a production form-delivery service or backend is configured.
+
+## Content Maintenance
+
+- Homepage hero artwork is stored in `public/images/`.
+- Upcoming events are maintained in `app/routes/events.tsx`.
+- Sermon archive entries are maintained in `app/routes/sermons.tsx`.
+- General church information is maintained in the route files under `app/routes/`.
+
+For frequent content changes, migrate events and sermons to a CMS or database and load them through React Router loaders.
+
+## Production Build
+
+```bash
+npm run typecheck
 npm run build
+npm run start
 ```
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
+## Docker
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+docker build -t rfag .
+docker run --rm -p 3000:3000 rfag
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+The container starts the server on port `3000` by default.

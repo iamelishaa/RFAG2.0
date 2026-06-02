@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Warm abstract worship background</title><desc id="desc">A sunrise-inspired purple and gold background with soft rays of light.</desc>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#24285f"/><stop offset=".55" stop-color="#4f55a1"/><stop offset="1" stop-color="#d68f58"/></linearGradient><radialGradient id="r"><stop stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+  <path fill="url(#g)" d="M0 0h1600v900H0z"/><circle cx="800" cy="680" r="430" fill="url(#r)" opacity=".7"/><path d="M800 50v700M260 220l540 530M1340 220 800 750M0 610l800 140m800-140L800 750" stroke="#fff" stroke-opacity=".12" stroke-width="42"/>
+  <path d="M0 770c260-120 420-80 630 20s360 90 550 0 280-80 420-30v140H0z" fill="#171a40" fill-opacity=".72"/>
+</svg>

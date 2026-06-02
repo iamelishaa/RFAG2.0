@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
 import { ArrowRight, Calendar, Play, Users } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export function meta({}: Route.MetaArgs) {
@@ -11,20 +11,24 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const images = [
+  { src: "/images/hero-worship.svg", alt: "Sunrise-inspired worship background" },
+  { src: "/images/hero-community.svg", alt: "Abstract landscape representing community" },
+  { src: "/images/hero-service.svg", alt: "Warm abstract background representing service" },
+];
+
 export default function Home() {
   const [currentImage, setCurrentImage] = useState(0);
-  const images = [
-    "/path/to/your/image1.jpg",
-    "/path/to/your/image2.jpg",
-    "/path/to/your/image3.jpg"
-  ];
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 3500);
+    }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <div>
@@ -38,12 +42,12 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 1 }}
               className="absolute inset-0"
             >
               <img
-                src={images[currentImage]}
-                alt="Hero background"
+                src={images[currentImage].src}
+                alt={images[currentImage].alt}
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -80,7 +84,7 @@ export default function Home() {
 
             {/* Pagination Dots */}
             <div className="flex justify-center gap-3 mt-16">
-              {images.map((_, index) => (
+              {images.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImage(index)}
@@ -89,7 +93,8 @@ export default function Home() {
                       ? "bg-white w-8"
                       : "bg-white/50 hover:bg-white/70"
                   }`}
-                  aria-label={`Go to slide ${index + 1}`}
+                  aria-label={`Show slide ${index + 1}: ${image.alt}`}
+                  aria-pressed={currentImage === index}
                 />
               ))}
             </div>

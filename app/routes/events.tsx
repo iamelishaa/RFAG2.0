@@ -1,5 +1,8 @@
 import type { Route } from "./+types/events";
-import { Calendar, Clock, MapPin, Users, ArrowRight } from "lucide-react";
+import type { FormEvent } from "react";
+import { Calendar, Clock, MapPin } from "lucide-react";
+import { createMailto } from "../config/site";
+import { formatLocalDate } from "../utils/date";
 import { useState } from "react";
 
 export function meta({}: Route.MetaArgs) {
@@ -13,7 +16,7 @@ const events = [
   {
     id: 1,
     title: "Sunday Worship Service",
-    date: "2025-06-01",
+    date: "2026-06-07",
     time: "10:00 AM",
     location: "Main Sanctuary",
     description: "Join us for uplifting worship and an inspiring message.",
@@ -23,7 +26,7 @@ const events = [
   {
     id: 2,
     title: "Midweek Bible Study",
-    date: "2025-06-04",
+    date: "2026-06-10",
     time: "7:00 PM",
     location: "Fellowship Hall",
     description: "Deep dive into Scripture with interactive discussion.",
@@ -33,7 +36,7 @@ const events = [
   {
     id: 3,
     title: "Youth Night",
-    date: "2025-06-07",
+    date: "2026-06-13",
     time: "6:30 PM",
     location: "Youth Center",
     description: "Fun, fellowship, and faith for teens and young adults.",
@@ -43,7 +46,7 @@ const events = [
   {
     id: 4,
     title: "Community BBQ",
-    date: "2025-06-15",
+    date: "2026-06-20",
     time: "12:00 PM",
     location: "Church Grounds",
     description: "Free community BBQ with food, games, and fellowship.",
@@ -53,7 +56,7 @@ const events = [
   {
     id: 5,
     title: "Worship Night",
-    date: "2025-06-07",
+    date: "2026-06-13",
     time: "6:00 PM",
     location: "Main Sanctuary",
     description: "Extended time of worship, prayer, and spiritual refreshment.",
@@ -63,7 +66,7 @@ const events = [
   {
     id: 6,
     title: "Men's Breakfast",
-    date: "2025-06-08",
+    date: "2026-06-21",
     time: "8:00 AM",
     location: "Fellowship Hall",
     description: "Breakfast and fellowship for men of all ages.",
@@ -86,6 +89,20 @@ export default function Events() {
   const handleRegister = (event: typeof events[0]) => {
     setSelectedEvent(event);
     setShowRegistrationModal(true);
+  };
+
+  const submitRegistration = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!selectedEvent) return;
+    const form = new FormData(event.currentTarget);
+    const body = [
+      `Event: ${selectedEvent.title}`,
+      `Date: ${formatLocalDate(selectedEvent.date, { month: "long", day: "numeric", year: "numeric" })} at ${selectedEvent.time}`,
+      `Name: ${form.get("name")}`,
+      `Email: ${form.get("email")}`,
+      `Phone: ${form.get("phone") || "Not provided"}`,
+    ].join("\n");
+    window.location.href = createMailto(`Event registration: ${selectedEvent.title}`, body);
   };
 
   return (
@@ -143,7 +160,7 @@ export default function Events() {
                   <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2 text-[#4F55A1]" />
-                      <span>{new Date(event.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+                      <span>{formatLocalDate(event.date, { weekday: "long", month: "long", day: "numeric" })}</span>
                     </div>
                     <div className="flex items-center">
                       <Clock className="h-4 w-4 mr-2 text-[#4F55A1]" />
@@ -178,7 +195,7 @@ export default function Events() {
             <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-8 text-center">
               <Calendar className="h-16 w-16 mx-auto mb-4 text-gray-400" />
               <p className="text-gray-600 dark:text-gray-400">
-                Interactive calendar coming soon! Check back for a full monthly view of all church events.
+                Weekly gatherings and special events are listed above. Contact us if you have questions about the schedule.
               </p>
             </div>
           </div>
@@ -191,57 +208,64 @@ export default function Events() {
             <p className="text-lg text-purple-100 mb-6 max-w-2xl mx-auto">
               Subscribe to our event calendar and get reminders about upcoming activities.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-300"
-              />
-              <button className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-purple-50 transition-colors">
-                Subscribe
-              </button>
-            </div>
+            <a
+              href="mailto:info@rhemafaith.org?subject=Event%20updates"
+              className="inline-block bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-purple-50 transition-colors"
+            >
+              Request Event Updates
+            </a>
           </div>
         </section>
       </div>
 
       {/* Registration Modal */}
       {showRegistrationModal && selectedEvent && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" role="presentation">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8" role="dialog" aria-modal="true" aria-labelledby="registration-title">
+            <h3 id="registration-title" className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Register for {selectedEvent.title}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
-              {new Date(selectedEvent.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} at {selectedEvent.time}
+              {formatLocalDate(selectedEvent.date, { weekday: "long", month: "long", day: "numeric" })} at {selectedEvent.time}
             </p>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={submitRegistration}>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="registration-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Full Name
                 </label>
                 <input
+                  id="registration-name"
+                  name="name"
                   type="text"
+                  autoComplete="name"
+                  required
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F55A1] dark:bg-gray-700 dark:text-white"
                   placeholder="John Doe"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="registration-email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Email
                 </label>
                 <input
+                  id="registration-email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
+                  required
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F55A1] dark:bg-gray-700 dark:text-white"
                   placeholder="john@example.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="registration-phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Phone (optional)
                 </label>
                 <input
+                  id="registration-phone"
+                  name="phone"
                   type="tel"
+                  autoComplete="tel"
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F55A1] dark:bg-gray-700 dark:text-white"
                   placeholder="(555) 123-4567"
                 />
@@ -258,7 +282,7 @@ export default function Events() {
                   type="submit"
                   className="flex-1 px-4 py-2 bg-[#4F55A1] text-white rounded-lg hover:bg-[#3D427B] transition-colors"
                 >
-                  Register
+                  Open Email App
                 </button>
               </div>
             </form>

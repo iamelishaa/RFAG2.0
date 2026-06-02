@@ -1,5 +1,7 @@
 import type { Route } from "./+types/sermons";
-import { Play, Search, Calendar, Clock, Filter, Video, Music } from "lucide-react";
+import { Search, Calendar, Clock, Video, Music } from "lucide-react";
+import { useSearchParams } from "react-router";
+import { formatLocalDate } from "../utils/date";
 import { useState } from "react";
 
 export function meta({}: Route.MetaArgs) {
@@ -79,7 +81,8 @@ const sermons = [
 ];
 
 export default function Sermons() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("q") ?? "");
   const [selectedSeries, setSelectedSeries] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
   const [selectedSermon, setSelectedSermon] = useState<typeof sermons[0] | null>(null);
@@ -150,7 +153,7 @@ export default function Sermons() {
         <section className="mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSermons.map((sermon) => (
-              <div key={sermon.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer" onClick={() => setSelectedSermon(sermon)}>
+              <button type="button" key={sermon.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer text-left" onClick={() => setSelectedSermon(sermon)} aria-label={`View details for ${sermon.title}`}>
                 <div className="relative">
                   <div className="bg-gradient-to-br from-[#6B72C7] to-[#4F55A1] h-48 flex items-center justify-center">
                     {sermon.type === "video" ? (
@@ -176,21 +179,22 @@ export default function Sermons() {
                   </p>
                   <div className="flex items-center text-sm text-gray-500 dark:text-gray-500">
                     <Calendar className="h-4 w-4 mr-1" />
-                    {new Date(sermon.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {formatLocalDate(sermon.date, { month: "short", day: "numeric", year: "numeric" })}
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </section>
 
         {/* Video Player Modal */}
         {selectedSermon && (
-          <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
-            <div className="max-w-4xl w-full">
+          <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4" role="presentation">
+            <div className="max-w-4xl w-full" role="dialog" aria-modal="true" aria-labelledby="sermon-title">
               <button
                 onClick={() => setSelectedSermon(null)}
                 className="absolute top-4 right-4 text-white hover:text-gray-300"
+                aria-label="Close sermon details"
               >
                 <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -201,25 +205,25 @@ export default function Sermons() {
                   {selectedSermon.type === "video" ? (
                     <div className="text-center text-white">
                       <Video className="h-24 w-24 mx-auto mb-4" />
-                      <p className="text-xl">Video Player</p>
-                      <p className="text-gray-400">Video integration coming soon</p>
+                      <p className="text-xl">Video unavailable</p>
+                      <p className="text-gray-400">Contact us to request this sermon recording.</p>
                     </div>
                   ) : (
                     <div className="text-center text-white">
                       <Music className="h-24 w-24 mx-auto mb-4" />
-                      <p className="text-xl">Audio Player</p>
-                      <p className="text-gray-400">Audio integration coming soon</p>
+                      <p className="text-xl">Audio unavailable</p>
+                      <p className="text-gray-400">Contact us to request this sermon recording.</p>
                     </div>
                   )}
                 </div>
                 <div className="p-6">
-                  <h2 className="text-2xl font-bold text-white mb-2">{selectedSermon.title}</h2>
+                  <h2 id="sermon-title" className="text-2xl font-bold text-white mb-2">{selectedSermon.title}</h2>
                   <p className="text-gray-400 mb-4">{selectedSermon.speaker}</p>
                   <p className="text-gray-300">{selectedSermon.description}</p>
                   <div className="flex items-center gap-4 mt-4 text-gray-400">
                     <span className="flex items-center">
                       <Calendar className="h-4 w-4 mr-1" />
-                      {new Date(selectedSermon.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                      {formatLocalDate(selectedSermon.date, { month: "long", day: "numeric", year: "numeric" })}
                     </span>
                     <span className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />

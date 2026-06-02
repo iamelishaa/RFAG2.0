@@ -26,13 +26,20 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+const themeScript = `
+  const savedTheme = localStorage.getItem("darkMode");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.classList.toggle("dark", savedTheme === "true" || (savedTheme === null && prefersDark));
+`;
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Links />
       </head>
       <body>

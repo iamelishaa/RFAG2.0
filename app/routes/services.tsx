@@ -1,5 +1,6 @@
 import type { Route } from "./+types/services";
 import { Clock, MapPin, Calendar, Music, Users, Baby } from "lucide-react";
+import { siteConfig } from "../config/site";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -212,8 +213,15 @@ export default function Services() {
             <div className="bg-gray-200 dark:bg-gray-700 h-64 flex items-center justify-center">
               <div className="text-center text-gray-500 dark:text-gray-400">
                 <MapPin className="h-12 w-12 mx-auto mb-2" />
-                <p>Interactive Map</p>
-                <p className="text-sm">(Google Maps integration coming soon)</p>
+                <p className="mb-3">Plan your visit</p>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.addressLines.join(", "))}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block bg-[#4F55A1] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#3D427B] transition-colors"
+                >
+                  Get Directions
+                </a>
               </div>
             </div>
           </div>
