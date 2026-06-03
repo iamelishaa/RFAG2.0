@@ -129,118 +129,197 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+      {/* Latest Sermons Section */}
+      <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-2xl text-center">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                <img src="/images/120.png" alt="Sunday Services" className="w-full h-full object-cover" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Video Thumbnail */}
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-gray-900">
+                <img
+                  src="/images/pastor.png"
+                  alt="Latest Sermon Thumbnail"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                  <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors">
+                    <Play className="h-10 w-10 text-[#4F55A1] ml-1" />
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Sunday Services</h3>
-                <Link to="/services" className="text-[#4F55A1] dark:text-[#7B82FF] hover:underline">
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400">
-                Join us every Sunday at 10:00 AM for worship, fellowship, and inspiring messages.
-              </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-2xl text-center">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                <img src="/images/120.png" alt="Community Groups" className="w-full h-full object-cover" />
-              </div>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Community Groups</h3>
-                <Link to="/ministries" className="text-green-600 dark:text-green-400 hover:underline">
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400">
-                Connect with others through small groups, Bible studies, and ministry teams.
+            {/* Right Side - Sermon Details */}
+            <div>
+              <span className="text-sm font-semibold text-[#4F55A1] dark:text-[#7B82FF] tracking-wider uppercase">
+                Latest Sermon
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-gray-900 dark:text-white">
+                How to Survive Financial Stress
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                Discover biblical principles for managing your finances and finding peace in times of economic uncertainty. Learn practical wisdom from scripture that can transform your approach to money.
               </p>
-            </div>
-
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-2xl text-center">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                <img src="/images/120.png" alt="Sermon Archive" className="w-full h-full object-cover" />
-              </div>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Sermon Archive</h3>
-                <Link to="/sermons" className="text-purple-600 dark:text-purple-400 hover:underline">
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400">
-                Watch or listen to past sermons anytime, anywhere. Never miss a message.
-              </p>
+              <Link
+                to="/sermons"
+                className="bg-[#4F55A1] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#3D427B] transition-colors inline-flex items-center"
+              >
+                Watch Now
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Upcoming Events Preview */}
-      <section className="py-16">
+      {/* Welcome Section */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-2 mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Upcoming Events
-            </h2>
-            <Link to="/events" className="text-[#4F55A1] dark:text-[#7B82FF] hover:underline">
-              <ArrowRight className="h-6 w-6" />
-            </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Welcome Message */}
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+                Welcome to Our Family
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                We're so glad you're here. At Rhema Faith AG Church, you'll find a community of people who are passionate about following Jesus and making a difference in the world.
+              </p>
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                Whether you're new to faith or have been walking with God for years, there's a place for you here. Come as you are and experience the love and grace of God in a real and tangible way.
+              </p>
+              <Link
+                to="/about"
+                className="bg-[#4F55A1] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#3D427B] transition-colors inline-flex items-center"
+              >
+                Meet Our Pastor
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+
+            {/* Right Side - Pastor Photo */}
+            <div className="relative">
+              <img
+                src="/images/pastor.png"
+                alt="Pastor"
+                className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-2xl hover:shadow-3xl transition-shadow">
-              <div className="flex items-start justify-between">
+        </div>
+      </section>
+
+      {/* Upcoming Events Section */}
+      <section className="py-20 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white">Upcoming <span className="italic font-normal">Events</span></h2>
+          </div>
+
+          <div className="space-y-12">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="w-full md:w-[400px] h-[225px] rounded-2xl overflow-hidden flex-shrink-0 shadow-xl">
+                <img
+                  src="/images/pastor.png"
+                  alt="Sunday Worship Service"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <span className="text-sm text-[#4F55A1] dark:text-[#7B82FF] font-semibold">Sunday</span>
-                  <h3 className="text-xl font-semibold mt-1 text-gray-900 dark:text-white">Sunday Worship Service</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">10:00 AM - Main Sanctuary</p>
+                  <span className="text-lg font-semibold text-[#4F55A1] dark:text-[#7B82FF]">Sunday, June 8</span>
+                  <h3 className="text-4xl font-bold mt-2 text-gray-900 dark:text-white">Sunday Worship Service</h3>
+                  <p className="text-xl text-gray-600 dark:text-gray-400 mt-3">10:00 AM - Main Sanctuary</p>
                 </div>
-                <Calendar className="h-6 w-6 text-gray-400" />
+                <Link to="/events" className="inline-block mt-6 text-[#4F55A1] dark:text-[#7B82FF] font-bold text-lg hover:underline">
+                  Learn More →
+                </Link>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-2xl hover:shadow-3xl transition-shadow">
-              <div className="flex items-start justify-between">
+            <hr className="border-gray-200 dark:border-gray-700" />
+
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="w-full md:w-[400px] h-[225px] rounded-2xl overflow-hidden flex-shrink-0 shadow-xl">
+                <img
+                  src="/images/pastor.png"
+                  alt="Midweek Bible Study"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <span className="text-sm text-green-600 dark:text-green-400 font-semibold">Wednesday</span>
-                  <h3 className="text-xl font-semibold mt-1 text-gray-900 dark:text-white">Midweek Bible Study</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">7:00 PM - Fellowship Hall</p>
+                  <span className="text-lg font-semibold text-green-600 dark:text-green-400">Wednesday, June 11</span>
+                  <h3 className="text-4xl font-bold mt-2 text-gray-900 dark:text-white">Midweek Bible Study</h3>
+                  <p className="text-xl text-gray-600 dark:text-gray-400 mt-3">7:00 PM - Fellowship Hall</p>
                 </div>
-                <Calendar className="h-6 w-6 text-gray-400" />
+                <Link to="/events" className="inline-block mt-6 text-green-600 dark:text-green-400 font-bold text-lg hover:underline">
+                  Learn More →
+                </Link>
+              </div>
+            </div>
+
+            <hr className="border-gray-200 dark:border-gray-700" />
+
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="w-full md:w-[400px] h-[225px] rounded-2xl overflow-hidden flex-shrink-0 shadow-xl">
+                <img
+                  src="/images/pastor.png"
+                  alt="Youth Night"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1 flex flex-col justify-between">
+                <div>
+                  <span className="text-lg font-semibold text-purple-600 dark:text-purple-400">Friday, June 13</span>
+                  <h3 className="text-4xl font-bold mt-2 text-gray-900 dark:text-white">Youth Night</h3>
+                  <p className="text-xl text-gray-600 dark:text-gray-400 mt-3">6:30 PM - Youth Center</p>
+                </div>
+                <Link to="/events" className="inline-block mt-6 text-purple-600 dark:text-purple-400 font-bold text-lg hover:underline">
+                  Learn More →
+                </Link>
               </div>
             </div>
           </div>
-          <div className="text-center mt-8">
+
+          <div className="mt-16">
             <Link
               to="/events"
-              className="text-[#4F55A1] dark:text-[#7B82FF] font-semibold hover:text-[#3D427B] dark:hover:text-[#EEF0FF] inline-flex items-center"
+              className="bg-[#4F55A1] text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-[#3D427B] transition-colors inline-flex items-center"
             >
               View All Events
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-6 w-6" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Call to Action */}
-      <section className="bg-[#4F55A1] text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Join Our Community?</h2>
-          <p className="text-xl mb-8 text-[#EEF0FF]">
-            We'd love to meet you this Sunday. Come as you are!
-          </p>
-          <Link
-            to="/contact"
-            className="bg-white text-[#4F55A1] px-8 py-3 rounded-lg font-semibold hover:bg-[#EEF0FF] transition-colors inline-flex items-center justify-center"
-          >
-            Get in Touch
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
+      <section className="bg-[#4F55A1] text-white py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div className="lg:w-1/2 text-center lg:text-left">
+            <p className="text-sm font-semibold uppercase tracking-wider opacity-80 mb-3">Join Us This Sunday</p>
+            <h2 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              YOU'RE <span className="italic font-normal">Invited</span>
+            </h2>
+            <p className="text-lg lg:text-xl mb-10 opacity-90">
+              Whether you are just exploring your faith, looking for a new church home, or have been a believer for many years, we have a place for you.
+            </p>
+            <Link
+              to="/contact"
+              className="bg-white text-[#4F55A1] px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-colors inline-flex items-center justify-center"
+            >
+              Plan Your Visit
+            </Link>
+          </div>
+          <div className="lg:w-1/2 flex justify-center lg:justify-end">
+            <div className="w-full max-w-md lg:max-w-none rounded-3xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/pastor.png"
+                alt="People gathering at church"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </section>
     </div>
